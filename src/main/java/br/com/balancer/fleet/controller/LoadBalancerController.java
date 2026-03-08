@@ -14,12 +14,9 @@ import org.springframework.web.client.RestTemplate;
 public class LoadBalancerController {
 
     private final LoadBalancerService loadBalancerService;
-    private final RestTemplate restTemplate;
 
-    public LoadBalancerController(LoadBalancerService loadBalancerService,
-                                  RestTemplate restTemplate) {
+    public LoadBalancerController(LoadBalancerService loadBalancerService) {
         this.loadBalancerService = loadBalancerService;
-        this.restTemplate = restTemplate;
     }
 
     /**
@@ -31,21 +28,8 @@ public class LoadBalancerController {
     @RequestMapping("/**")
     public ResponseEntity<String> proxy(HttpServletRequest httpServletRequest) {
 
-        String targetServer = loadBalancerService.getNextService();
-        String targetUrl = buildTargetUrl(targetServer, httpServletRequest);
-
-        String response = restTemplate.getForObject(targetUrl, String.class);
+        var response = loadBalancerService.proxyRequest(httpServletRequest);
         return ResponseEntity.ok(response);
     }
 
-    private String buildTargetUrl(String targetServer, HttpServletRequest request) {
-        String targetUrl = targetServer + request.getRequestURI();
-
-        String queryString = request.getQueryString();
-        if (queryString != null && !queryString.isEmpty()) {
-            targetUrl += "?" + queryString;
-        }
-
-        return targetUrl;
-    }
 }
