@@ -30,7 +30,8 @@ Example:
 server {
     location {
         http://localhost:3001 weight=3,
-        http://localhost:3002 weight=2
+        http://localhost:3002 weight=2,
+        https://jsonplaceholder.typicode.com weight=4 
     }
 }
 ```
@@ -39,7 +40,8 @@ If you don't want to use Weighted Round Robin strategy you can simply remove the
 server {
     location {
         http://localhost:3001,
-        http://localhost:3002
+        http://localhost:3002,
+        https://jsonplaceholder.typicode.com
     }
 }
 ```
