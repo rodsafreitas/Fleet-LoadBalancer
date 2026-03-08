@@ -10,7 +10,7 @@ import java.util.regex.Pattern;
 public class ConfigParser {
 
     private static final Pattern SERVER_PATTERN = Pattern
-            .compile("(http://localhost:\\d+)(?:\\s+weight=(\\d+))?");
+            .compile("(https?://(?:[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|localhost)(?::\\d+)?)(?:\\s+weight=(\\d+))?");
 
     private static final int DEFAULT_WEIGHT = 1;
 
